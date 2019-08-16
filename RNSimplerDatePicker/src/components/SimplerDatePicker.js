@@ -193,7 +193,7 @@ class SimplerDatePicker extends React.Component {
       year,
     } = nextState;
     const userChangedDate = (day !== this.state.day) || (month !== this.state.month) || (year !== this.state.year);
-    if (date !== this.props.date) {
+    if (!!date && (date !== this.props.date)) {
       const newState = SimplerDatePicker
         .extractStateFromMoment(
           date,
