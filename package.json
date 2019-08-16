@@ -1,0 +1,22 @@
+{
+  "name": "@cawfree/react-native-simpler-date-picker",
+  "version": "0.0.1",
+  "keywords": [
+    "react",
+    "react-native",
+    "react-native-web",
+    "date",
+    "picker",
+    "select",
+    "dropdown"
+  ],
+  "description": "A simple date picker component with a focus on reducing implementation complexity.",
+  "main": "index.js",
+  "repository": "https://github.com/cawfree/react-native-simpler-date-picker",
+  "author": "Alex Thomas (@cawfree) <hello@cawfree.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "moment": "^2.24.0"
+  }
+}
