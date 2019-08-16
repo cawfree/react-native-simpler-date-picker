@@ -2,7 +2,7 @@
 A simple date picker component with a focus on reducing implementation complexity.
 
 <p align="center">
-  <img src="./bin/out.gif" alt="@cawfree/react-native-simpler-date-picker" width="406" height="616">
+  <img src="./bin/out.gif" alt="@cawfree/react-native-simpler-date-picker" width="532" height="82">
 </p>
 
 Are you using [react-native-simple-date-picker](https://github.com/cawfree/react-native-simple-date-picker)? _Don't_. It's deprecated (and overcomplicated).
