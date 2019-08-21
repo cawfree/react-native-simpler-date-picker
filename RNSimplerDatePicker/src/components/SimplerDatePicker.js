@@ -38,9 +38,19 @@ const pad = (n, z) => (Array(z).join('0') + (n)).slice(-z);
 
 class SimplerDatePicker extends React.Component {
   static getYearData = (minDate = Moment(), maxDate = Moment()) => {
-    const numberOfYears = maxDate.diff(minDate, 'years', false);
-    return [...Array(numberOfYears + 1)]
-      .map((e, i) => Moment(minDate).add(numberOfYears - i, 'years').format('YYYY'));
+    const min = Number.parseInt(minDate.format('YYYY'));
+    const max = Number.parseInt(maxDate.format('YYYY'));
+    return [
+      max,
+      ...(
+        [...Array(max - min)]
+          .map(
+            (e, i, arr) => ((max - i)),
+          )
+      ),
+      min,
+    ]
+      .filter((e, i, arr) => arr.indexOf(e) === i);
   }
   static getMonthData = (minDate = Moment(), maxDate = Moment()) => {
     return Moment.months();
@@ -53,6 +63,61 @@ class SimplerDatePicker extends React.Component {
     const daysInMonth = (year >= 0 && month >= 0) ? (date.daysInMonth()) : 0;
     return [...Array(daysInMonth)]
       .map((e, i) => i + 1);
+  };
+  static isMonthValid = (minDate, maxDate, yearData, year, month) => {
+    if (year < 0 || month < 0) {
+      return false;
+    }
+    const monthData = SimplerDatePicker
+      .getMonthData(
+        minDate,
+        maxDate,
+      );
+    const dayData = SimplerDatePicker
+      .getDayData(
+        minDate,
+        maxDate,
+        year,
+        yearData,
+        month,
+      );
+    return dayData
+      .reduce(
+        (res, day, i) => res || SimplerDatePicker
+          .isDayValid(
+            minDate,
+            maxDate,
+            yearData,
+            year,
+            monthData,
+            month,
+            i,
+          ),
+        false,
+      );
+  };
+  static isDayValid = (minDate, maxDate, yearData, year, monthData, month, day) => {
+    if (year < 0 || month < 0 || day < 0) {
+      return false;
+    }
+    return SimplerDatePicker
+      .isWithinBounds(
+        minDate,
+        maxDate,
+        Moment(`${yearData[year]}/${pad(month + 1, 2)}/${pad(day + 1, 2)}`, 'YYYY/MM/DD'),
+      );
+  };
+  static isWithinBounds = (minDate, maxDate, moment) => {
+    const min = Moment(minDate).subtract(1, 'days');
+    const max = Moment(maxDate).add(1, 'days');
+    return moment.isBetween(
+      minDate,
+      maxDate,
+      //min,
+      //max,
+      null,
+      '[]',
+    );
   };
   static getPickerItems = (prompt = 'Select Item', items = [], shouldHide = (() => false)) => {
     return [
@@ -283,29 +348,7 @@ class SimplerDatePicker extends React.Component {
     {
       day,
     },
-  );
-  static isMonthValid = (minDate, maxDate, yearData, year, month) => {
-    return SimplerDatePicker
-      .isWithinBounds(
-        minDate,
-        maxDate,
-        Moment(`${yearData[year]}/${pad(month + 1, 2)}/1`, 'YYYY/MM/DD'),
-      );
-  };
-  static isDayValid = (minDate, maxDate, yearData, year, monthData, month, day) => {
-    return SimplerDatePicker
-      .isWithinBounds(
-        minDate,
-        maxDate,
-        Moment(`${yearData[year]}/${pad(month + 1, 2)}/${pad(day + 1, 2)}`, 'YYYY/MM/DD'),
-      );
-  };
-  static isWithinBounds = (minDate, maxDate, moment) => {
-    return moment.isBetween(
-      Moment(minDate).subtract(1, 'days').format('YYYY/MM/DD'),
-      Moment(maxDate).add(1, 'days').format('YYYY/MM/DD'),
-    );
-  };
+  ); 
   render() {
     const {
       containerStyle,
@@ -446,7 +489,7 @@ SimplerDatePicker.defaultProps = {
   monthStyle: styles.monthStyle,
   dayStyle: styles.dayStyle,
   textStyle: styles.textStyle,
-  minDate: Moment().subtract(3, 'years'),
+  minDate: Moment().subtract(3, 'days'),
   maxDate: Moment().add(3, 'days'),
   date: null,
   mode: 'dropdown',
