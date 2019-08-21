@@ -44,32 +44,15 @@ class SimplerDatePicker extends React.Component {
   }
   static getMonthData = (minDate = Moment(), maxDate = Moment()) => {
     return Moment.months();
-    //return Moment.months()
-    //  .filter((e, i) => SimplerDatePicker.getDayData(minDate, maxDate, year, yearData, i).length > 0);
   };
   static getDayData = (minDate = Moment(), maxDate = Moment(), year, yearData, month) => {
     if (year < 0 || month < 0) {
       return [];
     }
-    const date = Moment(`${yearData[year]}/${pad(month + 1, 2)}`);
+    const date = Moment(`${yearData[year]}/${pad(month + 1, 2)}/1`);
     const daysInMonth = (year >= 0 && month >= 0) ? (date.daysInMonth()) : 0;
-    if (month < 0) {
-      return [];
-    }
     return [...Array(daysInMonth)]
       .map((e, i) => i + 1);
-      //.filter(
-      //  (e, i) => {
-      //    const moment = Moment(`${yearData[year]}/${pad(month + 1, 2)}/${pad(e, 2)}`);
-      //    const before = moment.isBefore(maxDate);
-      //    const after = moment.isAfter(minDate);
-      //    return moment.isBetween(
-      //      minDate,
-      //      maxDate,
-      //      true,
-      //    );
-      //  },
-      //);
   };
   static getPickerItems = (prompt = 'Select Item', items = [], shouldHide = (() => false)) => {
     return [
@@ -329,7 +312,7 @@ class SimplerDatePicker extends React.Component {
       .isWithinBounds(
         minDate,
         maxDate,
-        Moment(`${yearData[year]}/${monthData[month]}/${pad(day + 1, 2)}`),
+        Moment(`${yearData[year]}/${monthData[month]}/${pad(day + 1, 2)}`, 'YYYY/MM/DD'),
       );
   };
   static isWithinBounds = (minDate, maxDate, moment) => {
@@ -383,6 +366,7 @@ class SimplerDatePicker extends React.Component {
       >
         <Picker
           enabled
+          selectedValue={year}
           value={year}
           style={[
             yearStyle,
@@ -405,6 +389,7 @@ class SimplerDatePicker extends React.Component {
           style={monthStyle}
           mode={mode}
           value={month}
+          selectedValue={month}
           onValueChange={(i) => {
             const month = Number.parseInt(i);
             return this.onMonthPicked(Number.isNaN(month) ? -1 : month);
@@ -427,6 +412,7 @@ class SimplerDatePicker extends React.Component {
           style={dayStyle}
           mode={mode}
           value={day}
+          selectedValue={day}
           onValueChange={(i) => {
             const day = Number.parseInt(i);
             return this.onDayPicked(Number.isNaN(day) ? -1 : day);
