@@ -153,7 +153,6 @@ class SimplerDatePicker extends React.Component {
       minDate,
       maxDate,
     } = props;
-    console.log(maxDate);
     this.state = {
       ...SimplerDatePicker
         .extractStateFromMoment(
@@ -286,33 +285,19 @@ class SimplerDatePicker extends React.Component {
     },
   );
   static isMonthValid = (minDate, maxDate, yearData, year, month) => {
-    const daysInMonth = SimplerDatePicker
-      .getDayData(
+    return SimplerDatePicker
+      .isWithinBounds(
         minDate,
         maxDate,
-        year,
-        yearData,
-        month,
+        Moment(`${yearData[year]}/${pad(month + 1, 2)}/1`, 'YYYY/MM/DD'),
       );
-    return daysInMonth.filter(
-      (e, i) => SimplerDatePicker
-        .isDayValid(
-          minDate,
-          maxDate,
-          yearData,
-          year,
-          daysInMonth,
-          month,
-          i,
-        )
-      ).length > 0;
   };
   static isDayValid = (minDate, maxDate, yearData, year, monthData, month, day) => {
     return SimplerDatePicker
       .isWithinBounds(
         minDate,
         maxDate,
-        Moment(`${yearData[year]}/${monthData[month]}/${pad(day + 1, 2)}`, 'YYYY/MM/DD'),
+        Moment(`${yearData[year]}/${pad(month + 1, 2)}/${pad(day + 1, 2)}`, 'YYYY/MM/DD'),
       );
   };
   static isWithinBounds = (minDate, maxDate, moment) => {
