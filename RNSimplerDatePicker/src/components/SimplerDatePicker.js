@@ -50,7 +50,8 @@ class SimplerDatePicker extends React.Component {
       ),
       min,
     ]
-      .filter((e, i, arr) => arr.indexOf(e) === i);
+      .filter((e, i, arr) => arr.indexOf(e) === i)
+      .map(e => `${e}`);
   }
   static getMonthData = (minDate = Moment(), maxDate = Moment()) => {
     return Moment.months();
@@ -489,8 +490,8 @@ SimplerDatePicker.defaultProps = {
   monthStyle: styles.monthStyle,
   dayStyle: styles.dayStyle,
   textStyle: styles.textStyle,
-  minDate: Moment().subtract(3, 'days'),
-  maxDate: Moment().add(3, 'days'),
+  minDate: Moment().subtract(100, 'years'),
+  maxDate: Moment(),
   date: null,
   mode: 'dropdown',
   getPromptString: name => `Select ${name}`,

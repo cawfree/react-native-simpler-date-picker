@@ -20,9 +20,10 @@ const styles = StyleSheet
 
 class App extends React.Component {
   state = {
-    date: Moment(),
+    date: Moment(new Date(), 'YYYY/MM/DD'),
   }
   render() {
+    const { date } = this.state;
     return (
       <View
         style={[
@@ -31,8 +32,7 @@ class App extends React.Component {
         ]}
       >
         <SimplerDatePicker
-          minDate={Moment().subtract(5, 'years')}
-          maxDate={Moment().add(3, 'years')}
+          date={date}
         />
       </View>
     );
