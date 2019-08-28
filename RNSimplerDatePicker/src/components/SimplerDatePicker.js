@@ -228,23 +228,23 @@ class SimplerDatePicker extends React.Component {
         ),
     };
   }
-  componentDidMount() {
-    // XXX: Force the caller to sync with the currently selected
-    //      date. This is important for times where the date has
-    //      been selected, but it is invalid given the range.
-    const { minDate, maxDate, onDatePicked } = this.props;
-    const { year, month, day } = this.state;
-    return onDatePicked(
-      SimplerDatePicker
-        .getMomentFromState(
-          minDate,
-          maxDate,
-          year,
-          month,
-          day,
-        ),
-    );
-  }
+  //componentDidMount() {
+  //  // XXX: Force the caller to sync with the currently selected
+  //  //      date. This is important for times where the date has
+  //  //      been selected, but it is invalid given the range.
+  //  const { minDate, maxDate, onDatePicked } = this.props;
+  //  const { year, month, day } = this.state;
+  //  return onDatePicked(
+  //    SimplerDatePicker
+  //      .getMomentFromState(
+  //        minDate,
+  //        maxDate,
+  //        year,
+  //        month,
+  //        day,
+  //      ),
+  //  );
+  //}
   componentWillUpdate(nextProps, nextState) {
     const {
       date,
