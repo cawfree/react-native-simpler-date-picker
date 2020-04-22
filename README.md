@@ -26,7 +26,7 @@ yarn add @cawfree/react-native-simpler-date-picker
 It's really simple, just make sure you have [moment.js](https://momentjs.com/docs/) installed so you can toy with the results.
 
 ```js
-import { SimplerDatePicker } from '@cawfree/react-native-simpler-date-picker';
+import SimplerDatePicker from '@cawfree/react-native-simpler-date-picker';
 
 const App = () => (
   <SimplerDatePicker
