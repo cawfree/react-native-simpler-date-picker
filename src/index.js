@@ -120,9 +120,10 @@ class SimplerDatePicker extends React.Component {
       '[]',
     );
   };
-  static getPickerItems = (prompt = 'Select Item', items = [], shouldHide = (() => false)) => {
+  static getPickerItems = (prompt = 'Select Item', items = [], shouldHide = (() => false), pickerProps = {}) => {
     return [
       <Picker.Item
+        {...pickerProps}
         value={null}
         label={prompt}
       />,
@@ -130,6 +131,7 @@ class SimplerDatePicker extends React.Component {
         .map(
           (e, i) => (!shouldHide(e, i)) && (
             <Picker.Item
+              {...pickerProps}
               key={e}
               label={`${e}`}
               value={i}
@@ -382,6 +384,9 @@ class SimplerDatePicker extends React.Component {
       yearName,
       monthName,
       dayName,
+      yearPickerProps,
+      monthPickerProps,
+      dayPickerProps,
     } = this.props;
     const {
       year,
@@ -428,6 +433,8 @@ class SimplerDatePicker extends React.Component {
           {SimplerDatePicker.getPickerItems(
             getPromptString('Year'),
             yearData,
+            undefined,
+            yearPickerProps,
           )}
         </Picker>
         <Picker
@@ -451,6 +458,7 @@ class SimplerDatePicker extends React.Component {
               year,
               i,
             ),
+            monthPickerProps,
           )}
         </Picker>
         <Picker
@@ -477,6 +485,7 @@ class SimplerDatePicker extends React.Component {
                 month,
                 i,
               ),
+            dayPickerProps,
           )}
         </Picker>
       </View>
@@ -499,6 +508,9 @@ SimplerDatePicker.propTypes = {
   monthName: PropTypes.string,
   dayName: PropTypes.string,
   onDatePicked: PropTypes.func,
+  yearPickerProps: PropTypes.shape({}),
+  monthPickerProps: PropTypes.shape({}),
+  dayPickerProps: PropTypes.shape({}),
 };
 
 SimplerDatePicker.defaultProps = {
@@ -525,6 +537,9 @@ SimplerDatePicker.defaultProps = {
     }
     return console.log(date);
   },
+  yearPickerProps: {},
+  monthPickerProps: {},
+  dayPickerProps: {},
 };
 
 export default SimplerDatePicker;
