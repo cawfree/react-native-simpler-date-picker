@@ -413,7 +413,7 @@ class SimplerDatePicker extends React.Component {
       );
     return (
       <View
-        style={styles.containerStyle}
+        style={containerStyle}
       >
         <Picker
           enabled
